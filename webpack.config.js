@@ -1,9 +1,8 @@
 require('dotenv/config.js');
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const { PORT, BASE_URL } = process.env;
+const { PORT } = process.env;
 
 module.exports = {
   entry: ['./src/index.js'],
