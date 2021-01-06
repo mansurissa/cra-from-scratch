@@ -1,5 +1,5 @@
-const sayHello = () => ({
+const sayHello = (payload) => ({
   type: 'TEST',
-  payload: 'Hello there gangs',
+  payload,
 });
 export default sayHello;

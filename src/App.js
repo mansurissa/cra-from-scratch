@@ -1,16 +1,35 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import sayHello from './actionCreators';
+/* eslint-disable no-console */
+import React, { useState } from 'react';
+import propTypes from 'prop-types';
+import { connect } from 'react-redux';
+import sayHello from './actionCreators/index';
 
-const App = () => {
-  const greating = useSelector((state) => state.testReducer);
-  const dispatch = useDispatch();
+const mapStateToProps = (state) => ({ greating: state.testReducer });
+const mapDispatchToProps = (dispatch) => ({
+  sayHelloer: (e) => dispatch(sayHello(e)),
+});
+
+const Button = ({ onClick }) => <button onClick={onClick}>Display</button>;
+
+const App = ({ greating, sayHelloer }) => {
+  const [state, setstate] = useState('');
+  const handleClick = () => sayHelloer(state);
+  const handleChange = (e) => setstate(e.target.value);
   return (
     <div>
       <h1>{greating}</h1>
-      <button onClick={() => dispatch(sayHello())}>Exagrete</button>
+      <input onChange={handleChange} value={state} />
+      <Button onClick={handleClick} />
     </div>
   );
 };
 
-export default App;
+Button.propTypes = {
+  onClick: propTypes.func.isRequired,
+};
+App.propTypes = {
+  greating: propTypes.string.isRequired,
+  sayHelloer: propTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
